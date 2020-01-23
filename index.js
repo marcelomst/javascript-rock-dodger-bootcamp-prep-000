@@ -85,17 +85,18 @@ function createRock(x) {
      * If a rock collides with the DODGER,
      * we should call endGame().
     */
+    rock.style.top = `${topa += 2}px`; 
     if (checkCollision(rock)){
           endGame(); 
     }
     
-    topa += 2
+   
     if (topa <= GAME_HEIGHT){
       /**
      * Otherwise, if the rock hasn't reached the bottom of
      * the GAME, we want to move it again.
      */
-      rock.style.top = `${topa}px`; 
+      
       window.requestAnimationFrame(moveRock);
     }else{
       /**
@@ -125,12 +126,12 @@ function createRock(x) {
  * Finally, alert "YOU LOSE!" to the player.
  */
 function endGame() {
-  window.removeEventListener('keydown', moveDodger);
-  window.clearInterval(gameInterval);
+  clearInterval(gameInterval);
+  document.removeEventListener('keydown', moveDodger);
   ROCKS.forEach(function(rock){
     rock.remove();
   });
-  alert( "YOU LOSE!: ${ROCKS.}");
+  alert( "YOU LOSE!");
 }
 
 function moveDodger(e) {
@@ -142,15 +143,18 @@ function moveDodger(e) {
    * we've declared for you above.)
    * And be sure to use the functions declared below!
    */
-   if (e.which === LEFT_ARROW ){
-      e.preventDefault();
-      e.stopPropagation();
-      moveDodgerLeft(); 
+   const code = e.which
+
+  if ([LEFT_ARROW, RIGHT_ARROW].indexOf(code) > -1) {
+    e.preventDefault()
+    e.stopPropagation()
+  }
+  
+  if (e.which === LEFT_ARROW ){
+    moveDodgerLeft(); 
    }
    if (e.which === RIGHT_ARROW ){
-     e.preventDefault();
-     e.stopPropagation();
-     moveDodgerRight();
+    moveDodgerRight();
    }
 
 }
